@@ -1,8 +1,8 @@
 import os
 import telebot
 import datetime
-
-from QueryTask import queryAll, queryByDate, queryByPriority
+from functions.Returntask import ReturnTask
+from Database.QueryTask import queryAll, queryByDate, queryByPriority
 
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
 
@@ -16,40 +16,7 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda m: True)
 def send_all_task(message):
-    if message.text == 'All':
-        results = queryAll()
-
-    elif message.text == 'Hoje':
-        today = datetime.date.today()
-        d1 = today.strftime("%d.%m")
-        date = float(d1)
-
-        results = queryByDate(date)
-
-    elif message.text == 'Ontem':
-        today = datetime.date.today()
-        d1 = today.strftime("%d.%m")
-        date = float(d1) - 1
-
-        results = queryByDate(date)
-
-    elif message.text == 'Amanhã':
-        today = datetime.date.today()
-        d1 = today.strftime("%d.%m")
-        date = float(d1) + 1
-
-        results = queryByDate(date)
-
-    else:
-        try:
-            date = float(message.text)
-
-            results = queryByDate(date)
-
-        except:
-            priority = message.text
-
-            results = queryByPriority(priority)
+    results = ReturnTask(message.text)
 
     for task in results:
         me = message.chat.id

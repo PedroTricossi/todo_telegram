@@ -1,5 +1,5 @@
 import psycopg2
-from DBConnect import connect
+from Database.DBConnect import connect
 
 
 def queryByDate(date):
