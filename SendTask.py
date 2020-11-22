@@ -4,7 +4,7 @@ import datetime
 
 from QueryTask import queryAll, queryByDate, queryByPriority
 
-bot = telebot.TeleBot('1423871440:AAHP2mWEjw6uCFUxaaIXEiXAb0NUxFoPksA')
+bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'))
 
 user = bot.get_me()
 
@@ -19,10 +19,17 @@ def send_all_task(message):
     if message.text == 'All':
         results = queryAll()
 
-    elif message.text == 'Today' or 'today' or 'Hoje' or 'hoje':
+    elif message.text == 'Today' or 'Hoje':
         today = datetime.date.today()
         d1 = today.strftime("%d.%m")
         date = float(d1)
+
+        results = queryByDate(date)
+
+    elif message.text == 'Yesterday' or 'Ontem':
+        today = datetime.date.today()
+        d1 = today.strftime("%d.%m")
+        date = float(d1) - 1
 
         results = queryByDate(date)
 
