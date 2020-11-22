@@ -1,8 +1,9 @@
 import psycopg2
 from DBConnect import connect
+from DeleteTask import deleteTask
 
 
-def adicionaTask():
+def addTask():
     conn = connect()
 
     cur = conn.cursor()
@@ -29,7 +30,8 @@ def adicionaTask():
 
 
 def main():
-    adicionaTask()
+    addTask()
+    deleteTask()
 
 
 if __name__ == "__main__":
